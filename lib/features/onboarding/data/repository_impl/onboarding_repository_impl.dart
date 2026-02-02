@@ -1,4 +1,4 @@
-import 'package:todo_2026/features/onboarding/data/onboarding_local_datasource.dart';
+import 'package:todo_2026/features/onboarding/data/datasource/onboarding_local_datasource.dart';
 import 'package:todo_2026/features/onboarding/domain/repository/onboarding_repository.dart';
 
 class OnboardingRepositoryImpl implements OnboardingRepository {
@@ -11,5 +11,4 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
 
   @override
   Future<void> markOnboardingCompleted() => localDatasource.saveStatus();
-} 
-
+}
