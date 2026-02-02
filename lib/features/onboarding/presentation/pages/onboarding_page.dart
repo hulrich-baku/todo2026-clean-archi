@@ -12,9 +12,11 @@ class OnboardingPage extends ConsumerStatefulWidget {
 }
 
 class _OnboardingPageState extends ConsumerState<OnboardingPage> {
+
   int _currentPage = 0;
   final PageController _pageController = PageController();
   static const Color blueColor = Color.fromARGB(255, 2, 84, 151);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,6 +146,5 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
         ],
       ),
     );
-    ;
   }
 }
