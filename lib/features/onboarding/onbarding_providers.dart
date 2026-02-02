@@ -7,25 +7,13 @@ import 'package:todo_2026/features/onboarding/presentation/provider/onboarding_c
 
 // INJECTION DES DEPENDANCES
 
-// 1. Les couches basses
-final onboardingDatasource = Provider((ref) => OnboardingLocalDatasource());
-final onboardingRepositoryProvider = Provider<OnboardingRepositoryImpl>(
-  (ref) => OnboardingRepositoryImpl(ref.watch(onboardingDatasource))
-);
+final onboardingProvider = StateNotifierProvider<OnboardingController, bool?>(
+  (ref) {
+    final datasource = OnboardingLocalDatasource();
+    final repository = OnboardingRepositoryImpl(datasource);
 
-// 2. Les use cases
-final hasSeenOnboardingProvider = Provider(
-  (ref) => HasSeenOnboarding(ref.watch(onboardingRepositoryProvider))
-);
-final markOnboardingCompletedProvider = Provider(
-  (ref) => MarkOnboardingCompled(ref.watch(onboardingRepositoryProvider))
-);
-
-
-// 3. Le Notifier (Exposition à l'UI)
-final onboardingControllerProvider = StateNotifierProvider<OnboardingController, bool?>(
-  (ref) => OnboardingController(
-    // _hasSeen ET _markCompleted
-    ref.watch(hasSeenOnboardingProvider), ref.watch(markOnboardingCompletedProvider)
-  )
+    return OnboardingController(
+      HasSeenOnboarding(repository), MarkOnboardingCompled(repository)
+    );
+  }
 );

@@ -3,25 +3,40 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_2026/app/presentation/pages/root_loading_page.dart';
 import 'package:todo_2026/app/presentation/widgets/my_shell_scaffold.dart';
+import 'package:todo_2026/app/router/router_refresh.dart';
 import 'package:todo_2026/features/onboarding/onbarding_providers.dart';
+import 'package:todo_2026/features/onboarding/presentation/pages/onboarding_page.dart';
 
 final routerProvider = Provider((ref) {
-  // on écoute le contrôleur de l'onboarding
-  final onboardingState = ref.watch(onboardingControllerProvider);
-
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: '/loading',
+    refreshListenable: RouterRefresh(ref),
     redirect: (context, state) {
-      if (onboardingState == null) return null;
+      // on écoute le contrôleur de l'onboarding
+      final onboardingState = ref.watch(onboardingProvider);
 
-      final isAtOnboarding = state.matchedLocation == '/onboarding';
+      // 1. Si l'état est null → on laisse la page de loading
+      if (onboardingState == null) {
+        if (state.uri.path == '/loading') return null;
+        return '/loading'; // On force vers loading
+      }
 
-      // L'utilisateur n'a pas vu l'onboarding et il n'est pas sur la page d'onboarding
-      if (!onboardingState && !isAtOnboarding) return '/onboarding';
+      // 2. Onboarding pas encore vu
+      if (onboardingState == false) {
+        if (state.uri.path != '/onboarding') return '/onboarding';
+        return null;
+      }
 
-      // L'utilisateur a vu l'onboarding et il est encore sur la même page
-      // il est redirigé vers la page 'tasks'
-      if (onboardingState && isAtOnboarding) return '/tasks';
+      // 3. Onboarding déjà vu
+      if (onboardingState == true) {
+        // empêcher retour sur onboarding
+        if (state.uri.path == '/onboarding') return '/tasks';
+
+        // sortir de loading
+        if (state.uri.path == '/loading') return '/tasks';
+
+        return null;
+      }
 
       return null;
     },
@@ -35,7 +50,8 @@ final routerProvider = Provider((ref) {
           GoRoute(path: '/newList', builder: (_, _) => NewList()),
         ],
       ),
-      GoRoute(path: '/', builder: (context, state) => RootLoadingPage()),
+      GoRoute(path: '/loading', builder: (context, state) => RootLoadingPage()),
+      GoRoute(path: '/onboarding', builder: (context, state) => OnboardingPage()),
       GoRoute(path: '/details', builder: (context, state) => Details()),
     ],
   );
