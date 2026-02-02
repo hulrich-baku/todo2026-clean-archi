@@ -23,7 +23,7 @@ final markOnboardingCompletedProvider = Provider(
 
 
 // 3. Le Notifier (Exposition à l'UI)
-final onboardingNotifierProvider = StateNotifierProvider<OnboardingController, bool?>(
+final onboardingControllerProvider = StateNotifierProvider<OnboardingController, bool?>(
   (ref) => OnboardingController(
     // _hasSeen ET _markCompleted
     ref.watch(hasSeenOnboardingProvider), ref.watch(markOnboardingCompletedProvider)
