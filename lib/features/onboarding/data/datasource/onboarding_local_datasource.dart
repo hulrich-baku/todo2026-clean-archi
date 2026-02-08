@@ -1,18 +1,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_2026/core/constants/constants.dart' show keyOnboarding;
 
 class OnboardingLocalDatasource {
-  
-  static const String _keyOnboarding = 'has_seen_onboarding';
 
   Future<bool> getSatus () async {
     final preferences = await SharedPreferences.getInstance();
     
-    return preferences.getBool(_keyOnboarding) ?? false;
+    return preferences.getBool(keyOnboarding) ?? false;
   }
 
   Future<void> saveStatus () async {
     final preferences = await SharedPreferences.getInstance();
 
-    preferences.setBool(_keyOnboarding, true);
+    preferences.setBool(keyOnboarding, true);
   }
 }

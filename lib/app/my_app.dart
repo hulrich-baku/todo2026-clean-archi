@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_2026/core/theme/app_theme.dart';
 import './router/app_router.dart';
 
 class MyApp extends ConsumerWidget{
@@ -8,10 +9,13 @@ class MyApp extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final app_router = ref.watch(routerProvider);
+    final appRouter = ref.watch(routerProvider);
 
     return MaterialApp.router(
-      routerConfig: app_router
+      routerConfig: appRouter,
+      themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
     );
   }
 }
