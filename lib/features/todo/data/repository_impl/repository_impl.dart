@@ -40,7 +40,7 @@ class RepositoryImpl implements TodoRepository {
 
   @override
   Stream<List<Todo>> watchTodos() {
-    // Comme le TodoModel est un Todo, le polymorphisme opère
+    // Comme le TodoModel est un Todo, le polymorphisme s'opère
     return remoteDataSource.watchTodos();
   } 
 }

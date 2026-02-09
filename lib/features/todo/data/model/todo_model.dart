@@ -10,7 +10,7 @@ class TodoModel extends Todo {
     required super.createdAt
   });
 
-  // DESERIALIZATION : du Json (supabase) vers notre Model
+  // DESERIALIZATION : Json (supabase) -> Model
   // On utilise 'factory' pour créer une nouvelle instance à partir de notre map
   factory TodoModel.fromJson(Map<String, dynamic> json) {
     return TodoModel(
@@ -23,7 +23,7 @@ class TodoModel extends Todo {
     );
   }
 
-  // Model -> Json
+  // SERIALIZATION  : Model -> Json (supabase)
   Map<String, dynamic> toJson () {
     return {
       'id' : id,
@@ -35,7 +35,7 @@ class TodoModel extends Todo {
     };
   }
 
-  // MAPPING : Transformer une entité pure en Model
+  // MAPPING : Entité -> Model
   // Utile dans le repository pour pouvoir appeler .toJson()
   factory TodoModel.fromEntity(Todo todo) {
     return TodoModel(
