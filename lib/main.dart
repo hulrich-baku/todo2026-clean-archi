@@ -11,8 +11,6 @@ void main() async {
     url: 'https://baeikdtvfqvenwltxrrq.supabase.co',
     anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZWlrZHR2ZnF2ZW53bHR4cnJxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA1ODA0OTEsImV4cCI6MjA4NjE1NjQ5MX0.VDyzrjjoaFhhBYSA-KVmksQ3wdSXn0JFnhtVRXSeRPM'
   );
-  
-  runApp(
-    const ProviderScope(child: MyApp())
-  );
+
+  runApp(const ProviderScope(child: MyApp()));
 }

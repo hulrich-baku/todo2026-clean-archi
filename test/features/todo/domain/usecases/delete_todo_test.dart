@@ -28,7 +28,7 @@ void main() {
     description: "Faire son propre argent",
     isFavorite: true,
     isCompleted: false,
-    cretedAt: DateTime(2026, 2, 22),
+    createdAt: DateTime(2026, 2, 22),
   );
 
   test(

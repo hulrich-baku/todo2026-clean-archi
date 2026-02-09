@@ -4,7 +4,7 @@ class Todo {
   final String description;
   final bool isFavorite;
   final bool isCompleted;
-  final DateTime cretedAt;
+  final DateTime? createdAt;
 
   Todo({
     required this.id,
@@ -12,6 +12,6 @@ class Todo {
     required this.description,
     required this.isFavorite,
     required this.isCompleted,
-    required this.cretedAt
+    required this.createdAt
   });
 }
