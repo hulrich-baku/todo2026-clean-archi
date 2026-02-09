@@ -23,7 +23,7 @@ class TodoModel extends Todo {
     );
   }
 
-  // SERIALIZATION  : Model -> Json (supabase)
+  // SERIALIZATION : Model -> Json (supabase)
   Map<String, dynamic> toJson () {
     return {
       'id' : id,
