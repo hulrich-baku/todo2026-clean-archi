@@ -9,6 +9,7 @@ class CreateTodoBottomSheet extends StatefulWidget {
 }
 
 class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   bool showDetails = false;
@@ -18,6 +19,7 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
   @override
   void dispose() {
     titleController.dispose();
+    descriptionController.dispose();
     super.dispose();
   }
 
