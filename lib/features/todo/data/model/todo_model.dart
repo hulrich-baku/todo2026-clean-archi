@@ -26,12 +26,12 @@ class TodoModel extends Todo {
   // SERIALIZATION : Model -> Json (supabase)
   Map<String, dynamic> toJson () {
     return {
-      'id' : id,
+      if (id != null) 'id' : id,
       'title' : title,
       'description' : description,
       'is_favorite' : isFavorite,
       'is_completed' : isCompleted,
-      'created_at' : createdAt?.toIso8601String()
+      if (createdAt != null) 'created_at' : createdAt?.toIso8601String()
     };
   }
 

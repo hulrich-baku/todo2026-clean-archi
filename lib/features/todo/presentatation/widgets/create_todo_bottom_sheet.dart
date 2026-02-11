@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_2026/core/presentation/service/ui_helpers_date.dart';
+import 'package:todo_2026/features/todo/domain/entities/todo_entity.dart';
+import 'package:todo_2026/features/todo/presentatation/providers/todo_providers.dart';
 
-class CreateTodoBottomSheet extends StatefulWidget {
+class CreateTodoBottomSheet extends ConsumerStatefulWidget {
   const CreateTodoBottomSheet({super.key});
 
   @override
-  State<CreateTodoBottomSheet> createState() => _CreateTodoBottomSheetState();
+  ConsumerState<CreateTodoBottomSheet> createState() =>
+      _CreateTodoBottomSheetState();
 }
 
-class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
-
+class _CreateTodoBottomSheetState extends ConsumerState<CreateTodoBottomSheet> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   bool showDetails = false;
@@ -52,6 +55,7 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                   showDetails
                       ? TextField(
                           style: TextStyle(fontSize: 12.8),
+                          controller: descriptionController,
                           decoration: InputDecoration(
                             hintText: 'Ajouter des détails',
                             border: .none,
@@ -82,8 +86,8 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                   IconButton(
                     onPressed: () async {
                       date = await showAppDatePicker(context: context);
-                    }, 
-                    icon: Icon(Icons.access_time_sharp)
+                    },
+                    icon: Icon(Icons.access_time_sharp),
                   ),
                   IconButton(
                     onPressed: () {
@@ -99,11 +103,30 @@ class _CreateTodoBottomSheetState extends State<CreateTodoBottomSheet> {
                   ValueListenableBuilder(
                     valueListenable: titleController,
                     builder: (context, value, child) {
-                      final bool canSave = titleController.text.trim().isNotEmpty;
+                      final bool canSave = titleController.text
+                          .trim()
+                          .isNotEmpty;
                       return TextButton(
-                        onPressed: canSave ? () async {
-                          
-                        } : null,
+                        onPressed: canSave
+                            ? () async {
+                                final Todo todo = Todo(
+                                  id: null,
+                                  title: titleController.text,
+                                  description: descriptionController.text,
+                                  isFavorite: isFavorite,
+                                  isCompleted: false,
+                                  createdAt: null,
+                                );
+                                try {
+                                  await ref.read(createTodoProvider)(todo);
+                                  if (context.mounted) {
+                                    Navigator.pop(context);
+                                  }
+                                } catch (e) {
+                                  print("Erreur : $e");
+                                }
+                              }
+                            : null,
                         child: Text('Enregistrer'),
                       );
                     },

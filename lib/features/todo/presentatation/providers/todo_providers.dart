@@ -1,16 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_2026/core/providers/supabase_provider.dart';
+import 'package:todo_2026/features/todo/data/datasources/todo_remote_data_source.dart';
 import 'package:todo_2026/features/todo/data/datasources/todo_remote_data_source_impl.dart';
 import 'package:todo_2026/features/todo/data/repository_impl/repository_impl.dart';
+import 'package:todo_2026/features/todo/domain/entities/todo_entity.dart';
+import 'package:todo_2026/features/todo/domain/repository/todo_repository.dart';
 import 'package:todo_2026/features/todo/domain/usecases/create_todo.dart';
 import 'package:todo_2026/features/todo/domain/usecases/delete_todo.dart';
 import 'package:todo_2026/features/todo/domain/usecases/toggle_completed.dart';
 import 'package:todo_2026/features/todo/domain/usecases/toggle_favorite.dart';
 import 'package:todo_2026/features/todo/domain/usecases/update_todo.dart';
-import 'package:todo_2026/features/todo/domain/usecases/watch_todos.dart';
 
-// DATA
-final remoteDataSourceProvider = Provider<TodoRemoteDataSourceImpl>(
+// DATA source
+final remoteDataSourceProvider = Provider<TodoRemoteDataSource>(
   (ref) {
     final supabase = ref.watch(supabaseProvider);
     return TodoRemoteDataSourceImpl(supabase);
@@ -18,7 +20,7 @@ final remoteDataSourceProvider = Provider<TodoRemoteDataSourceImpl>(
 );
 
 // REPO
-final repositoryProvider = Provider<RepositoryImpl>(
+final repositoryProvider = Provider<TodoRepository>(
   (ref) {
     final remoteDataSource = ref.watch(remoteDataSourceProvider);
     return RepositoryImpl(remoteDataSource);
@@ -47,10 +49,10 @@ final updateTodoProvider = Provider<UpdateTodo>(
   }
 );
 
-final watchTodosProvider = Provider<WatchTodos>(
+final watchTodosProvider = StreamProvider<List<Todo>>(
   (ref) {
     final repository = ref.watch(repositoryProvider);
-    return WatchTodos(repository);
+    return repository.watchTodos();
   }
 );
 
