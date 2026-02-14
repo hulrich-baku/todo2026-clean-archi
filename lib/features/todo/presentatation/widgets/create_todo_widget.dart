@@ -4,15 +4,15 @@ import 'package:todo_2026/core/presentation/service/ui_helpers_date.dart';
 import 'package:todo_2026/features/todo/domain/entities/todo_entity.dart';
 import 'package:todo_2026/features/todo/presentatation/providers/todo_providers.dart';
 
-class CreateTodoBottomSheet extends ConsumerStatefulWidget {
-  const CreateTodoBottomSheet({super.key});
+class CreateTodoWidget extends ConsumerStatefulWidget {
+  const CreateTodoWidget({super.key});
 
   @override
-  ConsumerState<CreateTodoBottomSheet> createState() =>
-      _CreateTodoBottomSheetState();
+  ConsumerState<CreateTodoWidget> createState() =>
+      _CreateTodoWidgetState();
 }
 
-class _CreateTodoBottomSheetState extends ConsumerState<CreateTodoBottomSheet> {
+class _CreateTodoWidgetState extends ConsumerState<CreateTodoWidget> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   bool showDetails = false;
@@ -110,12 +110,10 @@ class _CreateTodoBottomSheetState extends ConsumerState<CreateTodoBottomSheet> {
                         onPressed: canSave
                             ? () async {
                                 final Todo todo = Todo(
-                                  id: null,
                                   title: titleController.text,
                                   description: descriptionController.text,
                                   isFavorite: isFavorite,
                                   isCompleted: false,
-                                  createdAt: null,
                                 );
                                 try {
                                   await ref.read(createTodoProvider)(todo);

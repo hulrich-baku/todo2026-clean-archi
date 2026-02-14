@@ -6,6 +6,7 @@ import 'package:todo_2026/app/presentation/widgets/my_shell_scaffold.dart';
 import 'package:todo_2026/app/router/router_refresh.dart';
 import 'package:todo_2026/features/onboarding/onbarding_providers.dart';
 import 'package:todo_2026/features/onboarding/presentation/pages/onboarding_page.dart';
+import 'package:todo_2026/features/todo/presentatation/widgets/todo_stream_list_widget.dart';
 
 final routerProvider = Provider((ref) {
   return GoRouter(
@@ -46,7 +47,7 @@ final routerProvider = Provider((ref) {
             MyShellScaffold(state: state, child: child),
         routes: [
           GoRoute(path: '/favoris', builder: (_, _) => Favoris()),
-          GoRoute(path: '/tasks', builder: (_, _) => Tasks()),
+          GoRoute(path: '/tasks', builder: (_, _) => TodoStreamListWidget()),
           GoRoute(path: '/newList', builder: (_, _) => NewList()),
         ],
       ),
@@ -67,14 +68,6 @@ class Favoris extends StatelessWidget {
   }
 }
 
-class Tasks extends StatelessWidget {
-  const Tasks({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text("Tâches"));
-  }
-}
 
 class NewList extends StatelessWidget {
   const NewList({super.key});

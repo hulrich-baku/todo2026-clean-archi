@@ -2,18 +2,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:todo_2026/features/todo/domain/entities/todo_entity.dart';
 import 'package:todo_2026/features/todo/domain/repository/todo_repository.dart';
-import 'package:todo_2026/features/todo/domain/usecases/delete_todo.dart';
+import 'package:todo_2026/features/todo/domain/usecases/toggle_completed.dart';
 
 import '../../../../helpers/todo_helpers.dart';
-
 
 class MockTodoRepository extends Mock implements TodoRepository {}
 
 class FakeTodo extends Fake implements Todo {}
 
 void main() {
-  late DeleteTodo deleteTodo;
   late MockTodoRepository mockTodoRepository;
+  late ToggleCompleted toggleCompleted;
 
   setUpAll(() {
     registerFallbackValue(FakeTodo());
@@ -21,19 +20,19 @@ void main() {
 
   setUp(() {
     mockTodoRepository = MockTodoRepository();
-    deleteTodo = DeleteTodo(mockTodoRepository);
+    toggleCompleted = ToggleCompleted(mockTodoRepository);
   });
 
   test(
-    'Doit appeler le repository pour supprimer un Todo et ne rien renvoyer',
+    'Doit appeler un repository qui reçoit un Todo et le bascule en completé. Il ne renvoit rien en retour', 
     () async {
       // ARRANGE
-      when(() => mockTodoRepository.deleteTodo(any())).thenAnswer((_) => Future.value());
+      when(() => mockTodoRepository.toggleCompleted(tTodo)).thenAnswer((_) => Future.value());
       // ACT
-      await deleteTodo(tTodo);
+      await toggleCompleted(tTodo);
       // ASSERT
-      verify(() => mockTodoRepository.deleteTodo(tTodo)).called(1);
+      verify(() => mockTodoRepository.toggleCompleted(tTodo)).called(1);
       verifyNoMoreInteractions(mockTodoRepository);
     }
-  ); 
+  );
 }

@@ -4,6 +4,8 @@ import 'package:todo_2026/features/todo/domain/entities/todo_entity.dart';
 import 'package:todo_2026/features/todo/domain/repository/todo_repository.dart';
 import 'package:todo_2026/features/todo/domain/usecases/create_todo.dart';
 
+import '../../../../helpers/todo_helpers.dart';
+
 class MockTodoRepository extends Mock implements TodoRepository {}
 
 // on crée une fausse valeur pour que le Mocktail à quoi ressemble un Todo
@@ -24,15 +26,6 @@ void main() {
     mockTodoRepository = MockTodoRepository();
     usecase = CreateTodo(mockTodoRepository);
   });
-
-  final Todo tTodo = Todo(
-    id: 'id1',
-    title: "Gagner de l'argent",
-    description: "Faire son propre argent",
-    isFavorite: true,
-    isCompleted: false,
-    createdAt: DateTime(2026, 2, 22),
-  );
 
   test(
     // la description
